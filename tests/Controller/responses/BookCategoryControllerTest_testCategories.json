@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": 6,
+      "title": "Adventure",
+      "slug": "Adventure"
+    },
+    {
+      "id": 4,
+      "title": "Fiction",
+      "slug": "fiction"
+    },
+    {
+      "id": 5,
+      "title": "Kids",
+      "slug": "Kids"
+    }
+  ]
+}
