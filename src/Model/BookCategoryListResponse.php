@@ -4,6 +4,10 @@ namespace App\Model;
 
 class BookCategoryListResponse
 {
+
+    /**
+     * @var BookCategoryListItem[]
+     */
     private array $items;
 
     /**
