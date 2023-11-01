@@ -1,17 +1,17 @@
 {
   "items": [
     {
-      "id": 6,
+      "id": 2,
       "title": "Adventure",
       "slug": "Adventure"
     },
     {
-      "id": 4,
+      "id": 1,
       "title": "Fiction",
       "slug": "fiction"
     },
     {
-      "id": 5,
+      "id": 3,
       "title": "Kids",
       "slug": "Kids"
     }
