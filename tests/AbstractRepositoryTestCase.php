@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 
-class AbstractRepositoryTestCase extends KernelTestCase
+abstract class AbstractRepositoryTestCase extends KernelTestCase
 {
     use ResetDatabase;
 
