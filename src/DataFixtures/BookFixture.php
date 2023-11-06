@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Book;
-use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,7 +18,7 @@ class BookFixture extends Fixture implements DependentFixtureInterface
         $book = (new Book())
             ->setId(1)
             ->setTitle('Cool book')
-            ->setPublicationDate(new DateTime('2022-01-01'))
+            ->setPublicationDate(new \DateTime('2022-01-01'))
             ->setMeap(false)
             ->setAuthors(['Johnny'])
             ->setSlug('cool-book')
@@ -30,7 +29,6 @@ class BookFixture extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-
 
     public function getDependencies(): array
     {

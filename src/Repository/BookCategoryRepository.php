@@ -23,7 +23,6 @@ class BookCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, BookCategory::class);
     }
 
-
     public function findAllSortedByTitle(): array
     {
         return $this->findBy([], ['title' => Criteria::ASC]);

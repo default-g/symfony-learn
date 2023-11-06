@@ -2,8 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\BookCategoryController;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookCategoryControllerTest extends WebTestCase
@@ -18,10 +16,8 @@ class BookCategoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/responses/BookCategoryControllerTest_testCategories.json',
+            __DIR__.'/responses/BookCategoryControllerTest_testCategories.json',
             $responseContent
         );
-
     }
-
 }

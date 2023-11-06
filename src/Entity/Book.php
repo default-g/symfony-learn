@@ -40,7 +40,6 @@ class Book
         return $this->slug;
     }
 
-
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
@@ -48,12 +47,10 @@ class Book
         return $this;
     }
 
-
     public function getImage(): string
     {
         return $this->image;
     }
-
 
     public function setImage(string $image): self
     {
@@ -62,12 +59,10 @@ class Book
         return $this;
     }
 
-
     public function getAuthors(): array
     {
         return $this->authors;
     }
-
 
     public function setAuthors(array $authors): self
     {
@@ -76,12 +71,10 @@ class Book
         return $this;
     }
 
-
     public function getPublicationDate(): \DateTimeInterface
     {
         return $this->publicationDate;
     }
-
 
     public function setPublicationDate(\DateTimeInterface $publicationDate): self
     {
@@ -90,12 +83,10 @@ class Book
         return $this;
     }
 
-
     public function isMeap(): bool
     {
         return $this->meap;
     }
-
 
     public function setMeap(bool $meap): self
     {
@@ -104,12 +95,10 @@ class Book
         return $this;
     }
 
-
     public function getCategories(): Collection
     {
         return $this->categories;
     }
-
 
     public function setCategories(Collection $categories): self
     {
@@ -117,7 +106,6 @@ class Book
 
         return $this;
     }
-
 
     public function __construct()
     {
@@ -128,7 +116,6 @@ class Book
     {
         return $this->id;
     }
-
 
     public function getTitle(): ?string
     {

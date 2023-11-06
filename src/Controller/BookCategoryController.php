@@ -2,26 +2,25 @@
 
 namespace App\Controller;
 
+use App\Model\BookCategoryListResponse;
 use App\Service\BookCategoryService;
-use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Model\BookCategoryListResponse;
 
-class BookCategoryController extends  AbstractController
+class BookCategoryController extends AbstractController
 {
     public function __construct(private readonly BookCategoryService $bookCategoryService)
     {
-
     }
-
 
     /**
      * @OA\Response(
      *      response=200,
      *      description="Returns a list of categories",
+     *
      *      @Model(type=BookCategoryListResponse::class)
      * )
      */

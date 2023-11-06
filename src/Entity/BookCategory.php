@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookCategoryReposityory::class)]
@@ -35,12 +34,10 @@ class BookCategory
         return $this;
     }
 
-
     public function getSlug(): string
     {
         return $this->slug;
     }
-
 
     public function setSlug(string $slug): self
     {

@@ -7,11 +7,9 @@ use App\Repository\BookCategoryRepository;
 use App\Repository\BookRepository;
 use App\Service\BookService;
 use App\Tests\AbstractTestCase;
-use PHPUnit\Framework\TestCase;
 
 class BookServiceTest extends AbstractTestCase
 {
-
     public function testGetBooksByCategoryNotFound()
     {
         $bookRepository = $this->createMock(BookRepository::class);

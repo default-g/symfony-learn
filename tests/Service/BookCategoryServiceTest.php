@@ -13,16 +13,12 @@ use App\Repository\BookRepository;
 use App\Service\BookCategoryService;
 use App\Service\BookService;
 use App\Tests\AbstractTestCase;
-use Doctrine\Common\Collections\Criteria;
-use PHPUnit\Framework\TestCase;
 
 class BookCategoryServiceTest extends AbstractTestCase
 {
-
     public function testGetCategories(): void
     {
-
-        $bookCategory =  (new BookCategory())
+        $bookCategory = (new BookCategory())
             ->setTitle('AAA')
             ->setSlug('AAA');
 
@@ -32,7 +28,7 @@ class BookCategoryServiceTest extends AbstractTestCase
         $repository->expects($this->once())
             ->method('findAllSortedByTitle')
             ->willReturn([
-               $bookCategory
+               $bookCategory,
             ]);
 
         $service = new BookCategoryService($repository);
@@ -61,10 +57,9 @@ class BookCategoryServiceTest extends AbstractTestCase
         $this->assertEquals($expected, $service->getBooksByCategory(130));
     }
 
-
     private function createBookEntity(): Book
     {
-        $book = (new Book)
+        $book = (new Book())
             ->setTitle('New Book')
             ->setImage('image.jpg')
             ->setSlug('new-book')
@@ -90,6 +85,5 @@ class BookCategoryServiceTest extends AbstractTestCase
             ->setImage($book->getImage())
             ->setMeap($book->getImage())
             ->setAuthors($book->getAuthors());
-
     }
 }

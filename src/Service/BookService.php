@@ -14,8 +14,7 @@ class BookService
     public function __construct(
         private readonly BookRepository $bookRepository,
         private readonly BookCategoryRepository $bookCategoryRepository
-    )
-    {
+    ) {
     }
 
     public function getBooksByCategory(int $categoryId): BookListResponse
@@ -29,9 +28,7 @@ class BookService
             [$this, 'map'],
             $this->bookRepository->findBooksByCategory($categoryId)
         ));
-
     }
-
 
     private function map(Book $book): BookListItem
     {

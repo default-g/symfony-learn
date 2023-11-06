@@ -4,7 +4,6 @@ namespace App\Model;
 
 class BookListResponse
 {
-
     /**
      * @var BookListItem[]
      */
@@ -27,6 +26,4 @@ class BookListResponse
     {
         $this->items = $items;
     }
-
-
 }

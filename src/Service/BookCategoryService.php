@@ -6,15 +6,12 @@ use App\Entity\BookCategory;
 use App\Model\BookCategoryListItem;
 use App\Model\BookCategoryListResponse;
 use App\Repository\BookCategoryRepository;
-use Doctrine\Common\Collections\Criteria;
 
 class BookCategoryService
 {
     public function __construct(private readonly BookCategoryRepository $bookCategoryRepository)
     {
-
     }
-
 
     public function getCategories(): BookCategoryListResponse
     {
@@ -22,11 +19,10 @@ class BookCategoryService
             ->bookCategoryRepository
             ->findAllSortedByTitle();
 
-        $items = array_map(fn(BookCategory $bookCategory) => new BookCategoryListItem(
+        $items = array_map(fn (BookCategory $bookCategory) => new BookCategoryListItem(
             $bookCategory->getId(), $bookCategory->getTitle(), $bookCategory->getSlug()
         ), $categories);
 
         return new BookCategoryListResponse($items);
     }
-
 }
