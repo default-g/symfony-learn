@@ -77,6 +77,7 @@
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^7.2",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "^3.37",
         "phpstan/phpstan": "^1.10",
@@ -85,6 +86,7 @@
         "symfony/css-selector": "6.3.*",
         "symfony/maker-bundle": "^1.51",
         "symfony/phpunit-bridge": "^6.3",
-        "symfony/var-exporter": "6.3.*"
+        "symfony/var-exporter": "6.3.*",
+        "zenstruck/foundry": "^1.36"
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\BookCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BookCategoryReposityory::class)]
+#[ORM\Entity(repositoryClass: BookCategoryRepository::class)]
 class BookCategory
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Book
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 

@@ -16,7 +16,6 @@ class BookFixture extends Fixture implements DependentFixtureInterface
         $adventure = $this->getReference(BookCategoriesFixtures::ADVENTURE);
 
         $book = (new Book())
-            ->setId(1)
             ->setTitle('Cool book')
             ->setPublicationDate(new \DateTime('2022-01-01'))
             ->setMeap(false)
