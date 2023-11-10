@@ -16,6 +16,8 @@ class BookListItem
      */
     private array $authors;
 
+    private int $publicationDate;
+
     private bool $meap;
 
     public function getId(): int
@@ -102,5 +104,4 @@ class BookListItem
         return $this;
     }
 
-    private int $publicationDate;
 }
