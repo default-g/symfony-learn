@@ -13,7 +13,7 @@ class BookCategoryControllerTest extends AbstractControllerTestCase
         $this->entityManager->persist((new BookCategory())->setTitle('DDD')->setSlug('DDD'));
         $this->entityManager->flush();
 
-        $this->client->request('GET', '/api/v1/bookCategories');
+        $this->client->request('GET', '/api/v1/book/categories');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertResponseIsSuccessful();

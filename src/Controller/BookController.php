@@ -15,9 +15,7 @@ use App\Model\ErrorResponse;
 
 class BookController extends AbstractController
 {
-    public function __construct(private readonly BookService $bookService)
-    {
-    }
+    public function __construct(private readonly BookService $bookService) {}
 
     /**
      * @OA\Response(
