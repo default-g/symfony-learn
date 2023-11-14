@@ -128,9 +128,9 @@ class ApiExceptionListenerTest extends AbstractTestCase
 
         $this->logger->expects($this->once())
             ->method('error')
-            ->with('error message', $this->anything());
+            ->with('Bad Gateway', $this->anything());
 
-        $event = $this->createEvent(new InvalidArgumentException('error message'));
+        $event = $this->createEvent(new InvalidArgumentException('Bad Gateway'));
 
         $this->runListener($event);
 
