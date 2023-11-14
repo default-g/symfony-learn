@@ -19,9 +19,7 @@ class ApiExceptionListener
         private LoggerInterface $logger,
         private SerializerInterface $serializer,
         private bool $isDebug
-    ) {
-
-    }
+    ) {}
 
 
     public function __invoke(ExceptionEvent $event): void
