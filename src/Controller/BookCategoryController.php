@@ -24,7 +24,7 @@ class BookCategoryController extends AbstractController
      *      @Model(type=BookCategoryListResponse::class)
      * )
      */
-    #[Route('/api/v1/book/categories', name: 'categories')]
+    #[Route('/api/v1/book/categories', name: 'categories', methods: ['GET'])]
     public function categories(): JsonResponse
     {
         return $this->json($this->bookCategoryService->getCategories());

@@ -41,7 +41,7 @@ class RequestBodyArgumentResolver implements ArgumentValueResolverInterface
         }
 
         $errors = $this->validator->validate($model);
-        if ($errors->count() > 0) {
+        if (count($errors) > 0) {
             throw new ValidationException($errors);
         }
 
