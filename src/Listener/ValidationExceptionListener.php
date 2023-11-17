@@ -29,7 +29,7 @@ class ValidationExceptionListener
             new ErrorResponse($throwable->getMessage(), $this->formatViolations($throwable->getViolationList())),
             JsonEncoder::FORMAT);
 
-        $event->setResponse(new JsonResponse($data, Response::HTTP_BAD_REQUEST, [], ));
+        $event->setResponse(new JsonResponse($data, Response::HTTP_BAD_REQUEST, [], true));
     }
 
 
