@@ -43,9 +43,11 @@ class BookRepositoryTestCaseTest extends AbstractRepositoryTestCase
             ->setTitle($title)
             ->setCategories(new ArrayCollection($categories))
             ->setSlug($title)
-            ->setPublicationDate(new \DateTime())
+            ->setPublicationDate(new \DateTimeImmutable())
             ->setMeap(false)
             ->setImage('image.png')
-            ->setAuthors(['me']);
+            ->setAuthors(['me'])
+            ->setDescription('fdfdf')
+            ->setIsbn('aaaa');
     }
 }

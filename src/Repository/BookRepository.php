@@ -31,4 +31,15 @@ class BookRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+
+    public function getById(int $id): Book
+    {
+        $book = $this->find($id);
+        if (null === $book) {
+            throw new \Exception('Book not found');
+        }
+
+        return $book;
+    }
 }

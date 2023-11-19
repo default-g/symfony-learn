@@ -17,12 +17,14 @@ class BookFixture extends Fixture implements DependentFixtureInterface
 
         $book = (new Book())
             ->setTitle('Cool book')
-            ->setPublicationDate(new \DateTime('2022-01-01'))
+            ->setPublicationDate(new \DateTimeImmutable('2022-01-01'))
             ->setMeap(false)
             ->setAuthors(['Johnny'])
             ->setSlug('cool-book')
             ->setCategories(new ArrayCollection([$fiction]))
-            ->setImage('/cool-image');
+            ->setImage('/cool-image')
+            ->setDescription('test description')
+            ->setIsbn('123456789');
 
         $manager->persist($book);
 

@@ -3,17 +3,26 @@
 namespace App\Service;
 
 use App\Entity\Book;
+use App\Entity\BookCategory;
+use App\Entity\BookToBookFormat;
 use App\Exception\BookCategoryNotFoundException;
+use App\Exception\BookNotFoundException;
+use App\Model\BookCategory as BookCategoryModel;
+use App\Model\BookDetails;
+use App\Model\BookFormat;
 use App\Model\BookListItem;
 use App\Model\BookListResponse;
 use App\Repository\BookCategoryRepository;
 use App\Repository\BookRepository;
+use App\Repository\ReviewRepository;
+use Doctrine\Common\Collections\Collection;
 
 class BookService
 {
     public function __construct(
-        private readonly BookRepository $bookRepository,
+        private readonly BookRepository         $bookRepository,
         private readonly BookCategoryRepository $bookCategoryRepository,
+        private readonly ReviewRepository       $reviewRepository
     )
     {
     }
@@ -29,6 +38,54 @@ class BookService
             $this->bookRepository->findBooksByCategory($categoryId)
         ));
     }
+
+
+    public function getBookById(int $bookId): BookDetails
+    {
+        $book = $this->bookRepository->getById($bookId);
+        $reviews = $this->reviewRepository->countByBookId($bookId);
+        $ratingSum = $this->reviewRepository->getBookTotalRatingSum($bookId);
+
+        $formats = $this->mapFormats($book->getFormats());
+
+        $categories = $book->getCategories()
+            ->map(
+                fn(BookCategory $bookCategory) => (new BookCategoryModel(
+                    $bookCategory->getId(), $bookCategory->getTitle(), $bookCategory->getSlug()
+                ))
+            );
+
+        return (new BookDetails())
+            ->setId($book->getId())
+            ->setTitle($book->getTitle())
+            ->setSlug($book->getSlug())
+            ->setImage($book->getImage())
+            ->setMeap($book->isMeap())
+            ->setAuthors($book->getAuthors())
+            ->setPublicationDate($book->getPublicationDate()->getTimestamp())
+            ->setRating($reviews > 0 ? $ratingSum / $reviews : 0)
+            ->setReviews($reviews)
+            ->setFormats($formats)
+            ->setCategories($categories->toArray());
+    }
+
+
+    /**
+     * @param Collection $formats
+     * @return BookFormat[]
+     */
+    private function mapFormats(Collection $formats): array
+    {
+        return $formats->map(fn (BookToBookFormat $bookFormat) => (new BookFormat())
+                ->setId($bookFormat->getBookFormat()->getId())
+                ->setTitle($bookFormat->getBookFormat()->getTitle())
+                ->setPrice($bookFormat->getBookFormat()->getPrice())
+                ->setDescription($bookFormat->getBookFormat()->getDescription())
+                ->setDiscountPercent($bookFormat->getDiscountPercent())
+                ->setPrice($bookFormat->getPrice())
+        )->toArray();
+    }
+
 
     private function map(Book $book): BookListItem
     {
