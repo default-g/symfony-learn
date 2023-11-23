@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\ORM\HasLifecycleCallbacks]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
 {
@@ -40,9 +41,7 @@ class Review
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    /**
-     * @return int
-     */
+
     public function getRating(): int
     {
         return $this->rating;

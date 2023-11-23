@@ -39,10 +39,13 @@ class ReviewRepository extends ServiceEntityRepository
     }
 
 
-    public function getPageByBookId(int $id, int $offset, int $limit): Paginator
+    /**
+     * @return Paginator&Countable
+     */
+    public function getPageByBookId(int $id, int $offset, int $limit)
     {
         $query = $this->_em
-            ->createQuery('SELECT SUM(r.rating) FROM App\Entity\Review r WHERE r.book = :id ORDER BY r.createdAt DESC')
+            ->createQuery('SELECT r FROM App\Entity\Review r WHERE r.book = :id ORDER BY r.createdAt DESC')
             ->setParameter('id', $id)
             ->setFirstResult($offset)
             ->setMaxResults($limit);

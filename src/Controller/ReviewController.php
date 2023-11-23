@@ -11,11 +11,8 @@ use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Model\BookListResponse;
-use App\Model\ErrorResponse;
-use App\Model\BookDetails;
+
 
 class ReviewController extends AbstractController
 {

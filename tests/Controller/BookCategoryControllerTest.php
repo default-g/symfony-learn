@@ -6,7 +6,7 @@ use App\Entity\BookCategory;
 use App\Tests\AbstractControllerTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BookCategoryControllerTest extends AbstractControllerTestCase
+class   BookCategoryControllerTest extends AbstractControllerTestCase
 {
     public function testCategories()
     {
