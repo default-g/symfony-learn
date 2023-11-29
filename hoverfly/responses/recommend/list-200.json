@@ -1,0 +1,7 @@
+{
+  "ts": {{ now '' 'unix'}},
+  "id": {{ Request.path.[3] }},
+  "recommendations": [
+    {"id": 1}
+  ]
+}

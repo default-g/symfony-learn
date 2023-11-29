@@ -23,4 +23,14 @@ services:
     ports:
       - "5433:5432"
 
-
+  hoverfly:
+    container_name: hoverfly
+    image: spectolabs/hoverfly:latest
+    volumes:
+      - "./hoverfly:/hoverfly_app:ro"
+    command:
+      - "-webserver"
+      - "-response-body-files-path=/hoverfly_app/responses"
+      - "-import=/hoverfly_app/simulations/recommend.simulation.json"
+    ports:
+      - "8500:8500"

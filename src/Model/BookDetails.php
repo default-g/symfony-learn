@@ -37,6 +37,10 @@ class BookDetails
      */
     private array $formats;
 
+    /**
+     * @var RecommendedBook[]
+     */
+    private array $recommendations;
 
 
     public function getId(): int
@@ -175,6 +179,25 @@ class BookDetails
         return $this;
     }
 
+
+    /**
+     * @param RecommendedBook[] $recommended
+     */
+    public function setRecommended(array $recommended): self
+    {
+        $this->recommendations = $recommended;
+
+        return $this;
+    }
+
+
+    /**
+     * @return RecommendedBook[]
+     */
+    public function getRecommended(): array
+    {
+        return $this->recommendations;
+    }
 
 
 
