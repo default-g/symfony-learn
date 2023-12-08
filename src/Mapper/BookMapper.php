@@ -21,21 +21,4 @@ class BookMapper
             ->setAuthors($book->getAuthors())
             ->setPublicationDate($book->getPublicationDate()->getTimestamp());
     }
-
-
-    public static function mapRecommended(Book $book): RecommendedBook
-    {
-        $description = $book->getDescription();
-        $description = substr($description, 0, 150);
-
-        return (new RecommendedBook())
-            ->setId($book->getId())
-            ->setImage($book->getImage())
-            ->setSlug($book->getSlug())
-            ->setTitle($book->getTitle())
-            ->setShortDescription($description);
-
-
-    }
-
 }

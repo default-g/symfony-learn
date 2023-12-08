@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Mapper\BookMapper;
 use App\Repository\ReviewRepository;
+use App\Service\Recommendation\Model\RecommendationItem;
 
 class RatingService
 {
@@ -11,9 +13,12 @@ class RatingService
     }
 
 
-    public function calculateReviewRatingFromBook(int $id, int $total): float
+    public function calculateReviewRatingFromBook(int $id): Rating
     {
-        return $total > 0 ? $this->reviewRepository->getBookTotalRatingSum($id) / $total : 0;
+        $total = $this->reviewRepository->countByBookId($id);
+        $rating = $total > 0 ? $this->reviewRepository->getBookTotalRatingSum($id) / $total : 0;
+
+        return new Rating($total, $rating);
     }
 
 }

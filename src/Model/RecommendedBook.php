@@ -22,6 +22,8 @@ class RecommendedBook
     public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getTitle(): string
@@ -32,6 +34,8 @@ class RecommendedBook
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getSlug(): string
@@ -42,6 +46,8 @@ class RecommendedBook
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     public function getImage(): string
@@ -52,6 +58,8 @@ class RecommendedBook
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
     }
 
     public function getShortDescription(): string
@@ -62,9 +70,8 @@ class RecommendedBook
     public function setShortDescription(string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
     }
-
-
-
 
 }
