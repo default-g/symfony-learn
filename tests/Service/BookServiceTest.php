@@ -106,8 +106,7 @@ class BookServiceTest extends AbstractTestCase
         return new BookService(
             $this->bookRepository,
             $this->bookCategoryRepository,
-            $this->reviewRepository,
-            $this->ratingService
+            $this->ratingService,
         );
     }
 }

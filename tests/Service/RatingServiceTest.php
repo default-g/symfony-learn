@@ -3,6 +3,7 @@
 namespace App\Tests\Service;
 
 use App\Repository\ReviewRepository;
+use App\Service\Rating;
 use App\Service\RatingService;
 use App\Tests\AbstractTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -31,16 +32,21 @@ class RatingServiceTest extends AbstractTestCase
 
 
     #[DataProvider('provider')]
-    public function testCalculateReviewRatingFromBook(int $repositoryRatingSum, int $total, $expected)
+    public function testCalculateReviewRatingFromBook(int $repositoryRatingSum, int $total, float $expected)
     {
         $this->reviewRepository->expects($this->once())
             ->method('getBookTotalRatingSum')
             ->with(1)
             ->willReturn($repositoryRatingSum);
 
-        $actual = (new RatingService($this->reviewRepository))->calculateReviewRatingFromBook(1, $total);
+        $this->reviewRepository->expects($this->once())
+            ->method('countByBookId')
+            ->willReturn($total);
 
-        $this->assertEquals($expected, $actual);
+            $actual = (new RatingService($this->reviewRepository))
+                ->calculateReviewRatingFromBook(1);
+
+        $this->assertEquals(new Rating($total, $expected), $actual);
     }
 
 
@@ -48,8 +54,8 @@ class RatingServiceTest extends AbstractTestCase
     {
         $this->reviewRepository->expects($this->never())->method('getBookTotalRatingSum');
 
-        $actual = (new RatingService($this->reviewRepository))->calculateReviewRatingFromBook(1, 0);
+        $actual = (new RatingService($this->reviewRepository))->calculateReviewRatingFromBook(1);
 
-        $this->assertEquals(0, $actual);
+        $this->assertEquals($actual, new Rating(0, 0));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Tests\Service;
 use App\Entity\Review;
 use App\Model\ReviewPage;
 use App\Repository\ReviewRepository;
+use App\Service\Rating;
 use App\Service\RatingService;
 use App\Service\ReviewService;
 use App\Tests\AbstractTestCase;
@@ -43,12 +44,11 @@ class ReviewServiceTest extends AbstractTestCase
     #[DataProvider('provider')]
     public function testGetReviewsByBookIdInvalid(int $page, int $offset): void
     {
-
         $this->ratingService
             ->expects($this->once())
             ->method('calculateReviewRatingFromBook')
-            ->with(self::BOOK_ID, 0)
-            ->willReturn(0.0);
+            ->with(self::BOOK_ID)
+            ->willReturn(new Rating(0, 0.0));
 
         $this->reviewRepository
             ->expects($this->once())
@@ -74,8 +74,8 @@ class ReviewServiceTest extends AbstractTestCase
         $this->ratingService
             ->expects($this->once())
             ->method('calculateReviewRatingFromBook')
-            ->with(self::BOOK_ID, 1)
-            ->willReturn(4.0);
+            ->with(self::BOOK_ID)
+            ->willReturn(new Rating(1, 4.0));
 
         $review = (new Review())
             ->setContent('SSS')
