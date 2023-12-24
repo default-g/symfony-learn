@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  database:
-    container_name: postgres
+  database-test:
+    container_name: postgres-test
     image: postgres:latest
     environment:
       POSTGRES_DB: app
@@ -10,10 +10,10 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
-  hoverfly:
-    container_name: hoverfly
+  hoverfly-test:
+    container_name: hoverfly-test
     image: spectolabs/hoverfly:latest
     volumes:
       - "./hoverfly:/hoverfly_app:ro"
@@ -22,4 +22,5 @@ services:
       - "-response-body-files-path=/hoverfly_app/responses"
       - "-import=/hoverfly_app/simulations/recommend.simulation.json"
     ports:
-      - "8500:8500"
+      - "8501:8500"
+      - "8889:8888"

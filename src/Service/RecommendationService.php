@@ -22,7 +22,9 @@ class RecommendationService
     private static function map(Book $book): RecommendedBook
     {
         $description = $book->getDescription();
-        $description = substr($description, 0, self::MAX_DESCRIPTION_LENGTH - 3) . '...';
+        $description = strlen($description) > self::MAX_DESCRIPTION_LENGTH
+                ? substr($description, 0, self::MAX_DESCRIPTION_LENGTH - 3) . '...'
+                : $description;
 
         return (new RecommendedBook())
             ->setId($book->getId())
