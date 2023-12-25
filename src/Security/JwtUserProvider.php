@@ -17,7 +17,7 @@ class JwtUserProvider implements PayloadAwareUserProviderInterface
 
     public function loadUserByUsernameAndPayload(string $username, array $payload)
     {
-        return null;
+        return $this->loadUserByIdentifier($payload['username']);
     }
 
     public function refreshUser(UserInterface $user)
