@@ -43,7 +43,7 @@ class RecommendationService
         );
 
         return new RecommendedBookListResponse(
-            array_map([$this, 'map'], $this->bookRepository->findBooksByIds($ids))
+            array_map([$this, 'map'], $this->bookRepository->findPublishedBooksByIds($ids))
         );
 
     }

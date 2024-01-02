@@ -34,7 +34,7 @@ class BookRepositoryTestCaseTest extends AbstractRepositoryTestCase
 
         $this->entityManager->flush();
 
-        $this->assertCount(10, $this->bookRepository->findBooksByCategory($category->getId()));
+        $this->assertCount(10, $this->bookRepository->findPublishedBooksByCategoryId($category->getId()));
     }
 
     private function createBook(string $title, array $categories): Book

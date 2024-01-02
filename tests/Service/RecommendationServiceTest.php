@@ -67,7 +67,7 @@ class RecommendationServiceTest extends AbstractTestCase
         $this->setEntityId($entity, 2);
 
         $this->bookRepository->expects($this->once())
-            ->method('findBooksByIds')
+            ->method('findPublishedBooksByIds')
             ->with([2])
             ->willReturn([$entity]);
 

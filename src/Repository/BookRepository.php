@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Book;
+use App\Exception\BookNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Book>
@@ -24,18 +26,22 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @return Book[]
      */
-    public function findBooksByCategory(int $categoryId): array
+    public function findPublishedBooksByCategoryId(int $categoryId): array
     {
-        $query = $this->_em->createQuery('SELECT b FROM App\Entity\Book b WHERE :categoryId MEMBER OF b.categories');
-        $query->setParameter('categoryId', $categoryId);
-
-        return $query->getResult();
+        return $this->_em
+            ->createQuery('SELECT b FROM App\Entity\Book b WHERE :categoryId MEMBER OF b.categories AND b.publicationDate IS NOT NULL')
+            ->setParameter('id', $categoryId)
+            ->getResult();
     }
 
 
-    public function getById(int $id): Book
+    public function getPublishedById(int $id): Book
     {
-        $book = $this->find($id);
+        $book = $this->_em
+            ->createQuery('SELECT b FROM App\Entity\Book WHERE :id = b.id AND b.publishedDate IS NOT NULL')
+            ->setParameter('id', $id)
+            ->getOneOrNullResult();
+
         if (null === $book) {
             throw new \Exception('Book not found');
         }
@@ -47,8 +53,39 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @return Book[]
      */
-    public function findBooksByIds(array $ids): array
+    public function findPublishedBooksByIds(array $ids): array
     {
-        return $this->findBy(['id' => $ids]);
+        return $this->_em
+            ->createQuery('SELECT b FROM App\Entity\Book WHERE b.id MEMBER OF :ids AND b.publicationDate IS NOT NULL')
+            ->setParameter('ids', $ids)
+            ->getResult();
+    }
+
+
+    /**
+     * @param UserInterface $user
+     * @return Book[]
+     */
+    public function findUserBooks(UserInterface $user): array
+    {
+        return $this->findBy(['user' => $user]);
+    }
+
+
+    public function getUserBookById(int $id, UserInterface $user): Book
+    {
+        $book =  $this->findOneBy(['user' => $user, 'id' => $id]);
+        if (null === $book) {
+            throw new BookNotFoundException();
+        }
+
+        return $book;
+    }
+
+
+    public function existsBySlug(string $slug)
+    {
+        return null !== $this->findOneBy(['slug' => $slug]);
     }
 }
+

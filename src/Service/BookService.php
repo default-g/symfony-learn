@@ -32,14 +32,14 @@ class BookService
 
         return new BookListResponse(array_map(
             fn(Book $book) => BookMapper::map($book, new BookListItem()),
-            $this->bookRepository->findBooksByCategory($categoryId)
+            $this->bookRepository->findPublishedBooksByCategoryId($categoryId)
         ));
     }
 
 
     public function getBookById(int $bookId): BookDetails
     {
-        $book = $this->bookRepository->getById($bookId);
+        $book = $this->bookRepository->getPublishedById($bookId);
 
         $formats = $this->mapFormats($book->getFormats());
 
