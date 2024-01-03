@@ -260,6 +260,12 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/uid": {
+        "version": "6.3",
+        "recipe": {
+            "version": "6.2"
+        }
+    },
     "symfony/validator": {
         "version": "6.3",
         "recipe": {
