@@ -30,7 +30,7 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->_em
             ->createQuery('SELECT b FROM App\Entity\Book b WHERE :categoryId MEMBER OF b.categories AND b.publicationDate IS NOT NULL')
-            ->setParameter('id', $categoryId)
+            ->setParameter('categoryId', $categoryId)
             ->getResult();
     }
 

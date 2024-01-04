@@ -52,6 +52,8 @@ class ReviewControllerTest extends AbstractControllerTestCase
 
     private function createBook(): Book
     {
+        $user = $this->createAuthor('admin@admin', '123');
+
         $book = (new Book())
             ->setTitle('test')
             ->setImage('image.png')
@@ -60,6 +62,7 @@ class ReviewControllerTest extends AbstractControllerTestCase
             ->setDescription('321321')
             ->setPublicationDate(new \DateTimeImmutable())
             ->setAuthors(['me'])
+            ->setUser($user)
             ->setSlug('test');
 
         $this->entityManager->persist($book);

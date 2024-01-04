@@ -5,6 +5,7 @@ namespace App\Tests\Controller;
 use App\Controller\ReviewController;
 use App\Entity\Book;
 use App\Entity\Review;
+use App\Entity\User;
 use App\Tests\AbstractControllerTestCase;
 use Hoverfly\Model\RequestFieldMatcher;
 use Hoverfly\Model\Response;
@@ -71,6 +72,8 @@ class RecommendationControllerTest extends AbstractControllerTestCase
 
     private function createBook(): int
     {
+        $user = $this->createAuthor('admin', '123');
+
         $book = (new Book())
             ->setTitle('test')
             ->setImage('image.png')
@@ -79,6 +82,7 @@ class RecommendationControllerTest extends AbstractControllerTestCase
             ->setDescription('321321')
             ->setPublicationDate(new \DateTimeImmutable())
             ->setAuthors(['me'])
+            ->setUser($user)
             ->setSlug('test');
 
         $this->entityManager->persist($book);

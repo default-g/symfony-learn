@@ -13,6 +13,8 @@ use App\Repository\BookRepository;
 use App\Service\BookCategoryService;
 use App\Service\BookService;
 use App\Tests\AbstractTestCase;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class BookCategoryServiceTest extends AbstractTestCase
 {
@@ -24,6 +26,10 @@ class BookCategoryServiceTest extends AbstractTestCase
 
         $this->setEntityId($bookCategory, 7);
 
+        $slugger = $this->createMock(SluggerInterface::class);
+
+        $entityManager = $this->createMock(EntityManager::class);
+
         $repository = $this->createMock(BookCategoryRepository::class);
         $repository->expects($this->once())
             ->method('findAllSortedByTitle')
@@ -31,7 +37,7 @@ class BookCategoryServiceTest extends AbstractTestCase
                $bookCategory,
             ]);
 
-        $service = new BookCategoryService($repository);
+        $service = new BookCategoryService($repository, $entityManager, $slugger);
         $expected = new BookCategoryListResponse([new BookCategoryModel(7, 'AAA', 'AAA')]);
 
         $this->assertEquals($expected, $service->getCategories());

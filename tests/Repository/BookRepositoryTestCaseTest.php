@@ -4,6 +4,7 @@ namespace App\Tests\Repository;
 
 use App\Entity\Book;
 use App\Entity\BookCategory;
+use App\Entity\User;
 use App\Repository\BookRepository;
 use App\Tests\AbstractRepositoryTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,7 +20,7 @@ class BookRepositoryTestCaseTest extends AbstractRepositoryTestCase
         $this->bookRepository = $this->getRepositoryForEntity(Book::class);
     }
 
-    public function testFindBooksByCategoryId(): void
+    public function testFindPublishedBooksByCategoryId(): void
     {
         $category = (new BookCategory())
             ->setSlug('aaa')
@@ -27,14 +28,29 @@ class BookRepositoryTestCaseTest extends AbstractRepositoryTestCase
 
         $this->entityManager->persist($category);
 
+        $user = $this->createUser();
+        $this->entityManager->persist($user);
+
         for ($i = 0; $i < 10; ++$i) {
             $book = $this->createBook('AAA'.$i, [$category]);
+            $book->setUser($user);
             $this->entityManager->persist($book);
         }
 
         $this->entityManager->flush();
 
         $this->assertCount(10, $this->bookRepository->findPublishedBooksByCategoryId($category->getId()));
+    }
+
+
+    private function createUser(): User
+    {
+        return (new User())
+            ->setFirstName('A')
+            ->setLastName('A')
+            ->setRoles(['ROLE_AUTHOR'])
+            ->setPassword('123qwe123')
+            ->setEmail('admin@admin.com');
     }
 
     private function createBook(string $title, array $categories): Book
