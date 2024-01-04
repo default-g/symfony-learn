@@ -38,7 +38,7 @@ class BookRepository extends ServiceEntityRepository
     public function getPublishedById(int $id): Book
     {
         $book = $this->_em
-            ->createQuery('SELECT b FROM App\Entity\Book WHERE :id = b.id AND b.publishedDate IS NOT NULL')
+            ->createQuery('SELECT b FROM App\Entity\Book b WHERE :id = b.id AND b.publicationDate IS NOT NULL')
             ->setParameter('id', $id)
             ->getOneOrNullResult();
 
@@ -56,7 +56,7 @@ class BookRepository extends ServiceEntityRepository
     public function findPublishedBooksByIds(array $ids): array
     {
         return $this->_em
-            ->createQuery('SELECT b FROM App\Entity\Book WHERE b.id MEMBER OF :ids AND b.publicationDate IS NOT NULL')
+            ->createQuery('SELECT b FROM App\Entity\Book b WHERE b.id IN (:ids) AND b.publicationDate IS NOT NULL')
             ->setParameter('ids', $ids)
             ->getResult();
     }

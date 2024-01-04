@@ -12,7 +12,7 @@ class BookDetails
 
     private string $slug;
 
-    private string $image;
+    private ?string $image;
 
     /**
      * @var string[]
@@ -79,7 +79,7 @@ class BookDetails
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
