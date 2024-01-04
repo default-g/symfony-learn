@@ -56,7 +56,7 @@ class AdminController extends AbstractController
      *    )
      * @OA\Response(
      *     response=400,
-     *     description="Book category still contains books"
+     *     description="Book category still contains books",
      *     @Model(type=ErrorResponse::class)
      * )
      */
@@ -77,12 +77,12 @@ class AdminController extends AbstractController
      * )
      * @OA\Response(
      *      response=400,
-     *      description="Validation failed"
+     *      description="Validation failed",
      *      @Model(type=ErrorResponse::class)
      *  )
      * @OA\Response(
      *     response=409,
-     *     description="Book category already exists"
+     *     description="Book category already exists",
      *     @Model(type=ErrorResponse::class)
      * )
      * @OA\RequestBody(@Model(type=BookCategoryUpdateRequest::class))
@@ -102,12 +102,12 @@ class AdminController extends AbstractController
      * )
      * @OA\Response(
      *      response=400,
-     *      description="Validation failed"
+     *      description="Validation failed",
      *      @Model(type=ErrorResponse::class)
      *  )
      * @OA\Response(
      *     response=409,
-     *     description="Book category already exists"
+     *     description="Book category already exists",
      *     @Model(type=ErrorResponse::class)
      * )
      * @OA\RequestBody(@Model(type=BookCategoryUpdateRequest::class))
