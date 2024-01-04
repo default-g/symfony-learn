@@ -14,15 +14,15 @@ use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class AuthorService
+class AuthorBookService
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly BookRepository         $bookRepository,
         private readonly SluggerInterface       $slugger,
-        private readonly Security               $security,
         private readonly UploadService          $uploadService
     )
     {
@@ -31,7 +31,7 @@ class AuthorService
 
     public function uploadCover(int $id, UploadedFile $file): UploadCoverResponse
     {
-        $book = $this->bookRepository->getUserBookById($id, $this->security->getUser());
+        $book = $this->bookRepository->getBookById($id);
         $oldImage = $book->getImage();
 
         $link = $this->uploadService->uploadBookFile($id, $file);
@@ -48,37 +48,15 @@ class AuthorService
     }
 
 
-    public function publish(int $id, PublishBookRequest $request): void
-    {
-        $this->setPublicationDate($id, $request->getDate());
-    }
-
-
-    public function unpublish(int $id)
-    {
-        $this->setPublicationDate($id, null);
-    }
-
-
-    private function setPublicationDate(int $bookId, ?DateTimeInterface $dateTime): void
-    {
-        $book = $this->bookRepository->getUserBookById($bookId, $this->security->getUser());
-
-        $book->setPublicationDate($dateTime);
-
-        $this->entityManager->flush();
-    }
-
-
-    public function getBooks(): BookListResponse
+    public function getBooks(UserInterface $user): BookListResponse
     {
         return new BookListResponse(
-            array_map([$this, 'map'], $this->bookRepository->findUserBooks($this->security->getUser()))
+            array_map([$this, 'map'], $this->bookRepository->findUserBooks($user))
         );
     }
 
 
-    public function createBook(CreateBookRequest $request): void
+    public function createBook(CreateBookRequest $request, UserInterface $user): void
     {
         $slug = $this->slugger->slug($request->getTitle());
 
@@ -90,7 +68,7 @@ class AuthorService
             ->setTitle($request->getTitle())
             ->setSlug($slug)
             ->setMeap(false)
-            ->setUser($this->security->getUser());
+            ->setUser($user);
 
         $this->entityManager->persist($book);
         $this->entityManager->flush();
@@ -99,8 +77,7 @@ class AuthorService
 
     public function deleteBook(int $id): void
     {
-        $user = $this->security->getUser();
-        $book = $this->bookRepository->getUserBookById($id, $user);
+        $book = $this->bookRepository->getBookById($id);
 
         $this->entityManager->remove($book);
         $this->entityManager->flush();
