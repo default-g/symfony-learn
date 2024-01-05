@@ -42,7 +42,6 @@ class SignUpServiceTest extends AbstractTestCase
         return new SignUpService(
             $this->userRepository,
             $this->userPasswordHasher,
-            $this->entityManager,
             $this->authenticationSuccessHandler
         );
     }
@@ -91,8 +90,10 @@ class SignUpServiceTest extends AbstractTestCase
             ->with($expectedHasherUser, 'testtest')
             ->willReturn('hashed_password');
 
-        $this->entityManager->expects($this->once())->method('persist')->with($hasherUser);
-        $this->entityManager->expects($this->once())->method('flush');
+        $this->userRepository
+            ->expects($this->once())
+            ->method('saveAndCommit')
+            ->with($hasherUser);
 
         $this->authenticationSuccessHandler->expects($this->once())
             ->method('handleAuthenticationSuccess')

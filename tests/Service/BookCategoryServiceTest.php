@@ -28,8 +28,6 @@ class BookCategoryServiceTest extends AbstractTestCase
 
         $slugger = $this->createMock(SluggerInterface::class);
 
-        $entityManager = $this->createMock(EntityManager::class);
-
         $repository = $this->createMock(BookCategoryRepository::class);
         $repository->expects($this->once())
             ->method('findAllSortedByTitle')
@@ -37,7 +35,7 @@ class BookCategoryServiceTest extends AbstractTestCase
                $bookCategory,
             ]);
 
-        $service = new BookCategoryService($repository, $entityManager, $slugger);
+        $service = new BookCategoryService($repository, $slugger);
         $expected = new BookCategoryListResponse([new BookCategoryModel(7, 'AAA', 'AAA')]);
 
         $this->assertEquals($expected, $service->getCategories());

@@ -41,7 +41,7 @@ class SubscriberServiceTest extends AbstractTestCase
         $request->setEmail(self::EMAIL);
         $request->setAgreed(true);
 
-        (new SubscriberService($this->subscriberRepository, $this->entityManager))->subscribe($request);
+        (new SubscriberService($this->subscriberRepository))->subscribe($request);
 
     }
 
@@ -56,15 +56,16 @@ class SubscriberServiceTest extends AbstractTestCase
         $subscriber = new Subscriber();
         $subscriber->setEmail(self::EMAIL);
 
-        $this->entityManager->expects($this->once())
-            ->method('persist')
+        $this->subscriberRepository
+            ->expects($this->once())
+            ->method('saveAndCommit')
             ->with($subscriber);
 
         $request = new SubscriberRequest();
         $request->setEmail(self::EMAIL);
         $request->setAgreed(true);
 
-        (new SubscriberService($this->subscriberRepository, $this->entityManager))->subscribe($request);
+        (new SubscriberService($this->subscriberRepository))->subscribe($request);
 
     }
 }
