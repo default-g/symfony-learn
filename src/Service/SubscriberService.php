@@ -13,7 +13,6 @@ class SubscriberService
 {
     public function __construct(
         private readonly SubscriberRepository $subscriberRepository,
-        private readonly EntityManagerInterface $entityManager
     ) {}
 
     public function subscribe(SubscriberRequest $subscriberRequest): void
@@ -25,7 +24,6 @@ class SubscriberService
         $subscriber = new Subscriber();
         $subscriber->setEmail($subscriberRequest->getEmail());
 
-        $this->entityManager->persist($subscriber);
-        $this->entityManager->flush();
+        $this->subscriberRepository->saveAndCommit($subscriber);
     }
 }

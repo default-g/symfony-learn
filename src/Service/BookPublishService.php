@@ -11,7 +11,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 class BookPublishService
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
         private readonly BookRepository         $bookRepository,
     ) {}
 
@@ -33,7 +32,7 @@ class BookPublishService
 
         $book->setPublicationDate($dateTime);
 
-        $this->entityManager->flush();
+        $this->bookRepository->commit();
     }
 
 }

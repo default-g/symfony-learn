@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Attribute\RequestBody;
 use App\Attribute\RequestFile;
 use App\Model\Author\CreateBookRequest;
+use App\Model\Author\UpdateBookRequest;
 use App\Model\PublishBookRequest;
 use App\Security\Voter\AuthorBookVoter;
 use App\Service\AuthorBookService;
@@ -23,7 +24,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
 use App\Model\Author\UploadCoverResponse;
-
+use App\Model\Author\BookDetails;
 class AuthorController extends AbstractController
 {
     public function __construct(
@@ -164,5 +165,50 @@ class AuthorController extends AbstractController
         $this->authorService->deleteBook($id);
 
         return $this->json(null);
+    }
+
+
+    /**
+     * @OA\Tag(name="Author API")
+     * @OA\Response(
+     *     response=200,
+     *     description="Update book"
+     * )
+     *
+     * @OA\RequestBody(@Model(type=UpdateBookRequest::class))
+     * @OA\Response(
+     *        response=400,
+     *        description="Validation failed",
+     *        @Model(type=ErrorResponse::class)
+     *    )
+     */
+    #[Route(path: '/api/v1/author/book/{id}', methods: ['POST'])]
+    #[IsGranted(AuthorBookVoter::IS_AUTHOR, subject: 'id')]
+    public function updateBook(int $id, #[RequestBody] UpdateBookRequest $request): Response
+    {
+        $this->authorService->updateBook($id, $request);
+
+        return $this->json(null);
+    }
+
+
+    /**
+     * @OA\Tag(name="Author API")
+     * @OA\Response(
+     *     response=200,
+     *     description="Get authors owned book",
+     *     @Model(type=BookDetails::class)
+     * )
+     * @OA\Response(
+     *        response=404,
+     *        description="Book not found",
+     *        @Model(type=ErrorResponse::class)
+     *    )
+     */
+    #[Route(path: '/api/v1/author/book/{id}', methods: ['GET'])]
+    #[IsGranted(AuthorBookVoter::IS_AUTHOR, subject: 'id')]
+    public function getBook(int $id): Response
+    {
+        return $this->json($this->authorService->getBook($id));
     }
 }

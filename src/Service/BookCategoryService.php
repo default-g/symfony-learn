@@ -17,7 +17,6 @@ class BookCategoryService
 {
     public function __construct(
         private readonly BookCategoryRepository $bookCategoryRepository,
-        private readonly EntityManagerInterface $entityManager,
         private readonly SluggerInterface       $slugger
     )
     {
@@ -33,8 +32,7 @@ class BookCategoryService
             throw new BookCategoryNotEmptyException($bookCount);
         }
 
-        $this->entityManager->remove($category);
-        $this->entityManager->flush();
+        $this->bookCategoryRepository->removeAndCommit($category);
     }
 
 
@@ -80,7 +78,6 @@ class BookCategoryService
             ->setSlug($slug)
             ->setTitle($updateRequest->getTitle());
 
-        $this->entityManager->persist($category);
-        $this->entityManager->flush();
+        $this->bookCategoryRepository->save($category);
     }
 }

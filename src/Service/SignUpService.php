@@ -17,7 +17,6 @@ class SignUpService
     public function __construct(
         private UserRepository $userRepository,
         private UserPasswordHasherInterface $userPasswordHasher,
-        private EntityManagerInterface $entityManager,
         private AuthenticationSuccessHandler $authenticationSuccessHandler
     )
     {
@@ -38,8 +37,7 @@ class SignUpService
 
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $signUpRequest->getPassword()));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->saveAndCommit($user);
 
         return $this->authenticationSuccessHandler->handleAuthenticationSuccess($user);
     }

@@ -25,6 +25,44 @@ class BookCategoryRepository extends ServiceEntityRepository
     }
 
 
+    public function remove(BookCategory $bookCategory): void
+    {
+        $this->getEntityManager()->remove($bookCategory);
+    }
+
+
+    public function removeAndCommit(BookCategory $bookCategory): void
+    {
+        $this->remove($bookCategory);
+        $this->commit();
+    }
+
+    public function saveAndCommit(BookCategory $bookCategory): void
+    {
+        $this->save($bookCategory);
+        $this->commit();
+    }
+
+
+    public function save(BookCategory $bookCategory): void
+    {
+        $this->getEntityManager()->persist($bookCategory);
+    }
+
+
+    public function commit(): void
+    {
+        $this->getEntityManager()->flush();
+    }
+
+
+    /** @return BookCategory[] */
+    public function findBookCategoriesByIds(array $ids): array
+    {
+        return $this->findBy(['id' => $ids]);
+    }
+
+
     public function findAllSortedByTitle(): array
     {
         return $this->findBy([], ['title' => Criteria::ASC]);

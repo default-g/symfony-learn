@@ -155,6 +155,7 @@ class BookDetails
     }
 
 
+    /** @param \App\Model\BookCategory[] $categories */
     public function setCategories(array $categories): self
     {
         $this->categories = $categories;
